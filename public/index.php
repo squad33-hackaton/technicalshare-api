@@ -1,8 +1,9 @@
 <?php
 
-    require_once(__DIR__ . "/../include/bootstrap.php");
-    header("Content-type: application/json");
+require_once("../autoload.php");
 
-    new App\Core\Router();
+header("Content-type: application/json");
+
+new App\Core\Router();
     
 ?>

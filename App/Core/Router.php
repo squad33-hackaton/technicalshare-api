@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-class Router{
+class Router {
 
     private $controller;
     private $httpMethod;
@@ -35,6 +35,14 @@ class Router{
 
         switch ($this->httpMethod) {
             case "GET":
+                if (isset($url[2])) {
+                    $this->controllerMethod = "find";
+                    $this->params = [$url[2]];
+
+                } else {
+                    $this->controllerMethod = "index";
+
+                }
                 break;
 
             case "POST":
@@ -47,8 +55,12 @@ class Router{
                 break;
 
             default: 
+                echo "unknown method";
+                exit;
                 break;
         }
+
+        call_user_func_array([$this->controller, $this->controllerMethod], $this->params);
        
     }
 
