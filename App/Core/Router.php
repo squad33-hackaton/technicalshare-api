@@ -46,6 +46,7 @@ class Router {
                 break;
 
             case "POST":
+                $this->controllerMethod = "create";
                 break;
 
             case "PUT":

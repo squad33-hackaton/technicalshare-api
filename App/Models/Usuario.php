@@ -57,5 +57,40 @@ class Usuario {
         } else {
             return null;
         }
-    }    
+    }
+
+    public function insert() {
+        $sqlQuery = "INSERT INTO usuario (nome, email, senha, habilidade, linkedin, teams, whatsapp, is_mentor) 
+                     VALUES (:nome, :email, :senha, :habilidade, :linkedin, :teams, :whatsapp, :is_mentor)";
+        
+        $statement = Model::getConnection()->prepare($sqlQuery);
+
+        $this->nome=htmlspecialchars(strip_tags($this->nome));
+        $this->email=htmlspecialchars(strip_tags($this->email));
+        $this->senha=htmlspecialchars(strip_tags($this->senha));
+        $this->habilidade=htmlspecialchars(strip_tags($this->habilidade));
+        $this->linkedin=htmlspecialchars(strip_tags($this->linkedin));
+        $this->teams=htmlspecialchars(strip_tags($this->teams));
+        $this->whatsapp=htmlspecialchars(strip_tags($this->whatsapp));
+        $this->isMentor=htmlspecialchars(strip_tags($this->isMentor));
+
+        $statement->bindParam(":nome", $this->nome);
+        $statement->bindParam(":email", $this->email);
+        $statement->bindParam(":senha", $this->senha);
+        $statement->bindParam(":habilidade", $this->habilidade);
+        $statement->bindParam(":linkedin", $this->linkedin);
+        $statement->bindParam(":teams", $this->teams);
+        $statement->bindParam(":whatsapp", $this->whatsapp);
+        $statement->bindParam(":is_mentor", $this->isMentor);
+
+        if ($statement->execute()) {
+            $this->id = Model::getConnection()->lastInsertId();
+            return $this;
+
+        } else {
+            print_r($statement->errorInfo());
+            return null;
+        }
+
+    }
 }
