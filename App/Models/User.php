@@ -2,7 +2,7 @@
 
 use App\Core\Model;
 
-class User {
+class User implements JsonSerializable {
 
     public $id;
     public $name;
@@ -15,6 +15,43 @@ class User {
     public $teams;
     public $whatsapp;
 
+    public function jsonSerialize() {
+        return User::toJson($this);
+    }
+
+    public static function toJson($obj) {
+        return [
+            'id' => $obj->id,
+            'name' => $obj->name,
+            'email' => $obj->email,
+            'position' => $obj->position,
+            'level' => $obj->level,
+            'isMentor' => $obj->isMentor,
+            'techs' => $obj->techs,
+            'links' => [
+                "linkedin" => $obj->linkedin,
+                "teams" => $obj->teams,
+                "whatsapp" => $obj->whatsapp
+            ]
+        ];
+    }
+
+    public static function fromJson($obj) {
+        $user = new self();
+        
+        $user->name = $obj->name;
+        $user->email = $obj->email;
+        $user->position = $obj->position;
+        $user->level = $obj->level;
+        $user->isMentor = $obj->isMentor;
+        $user->techs = $obj->techs;
+        $user->linkedin = $obj->links->linkedin;
+        $user->teams = $obj->links->teams;
+        $user->whatsapp = $obj->links->whatsapp;
+
+        return $user;
+    }
+
     public function listAll() {
         $sqlQuery = "SELECT * FROM user";
 
@@ -22,9 +59,11 @@ class User {
         $statement->execute();
 
         if ($statement->rowCount() > 0) {
-            $result = $statement->fetchAll(PDO::FETCH_OBJ);
-            return $result;
-
+            $users = array();
+            while ($user = $statement->fetch(PDO::FETCH_OBJ)) {
+                array_push($users, User::toJson($user));
+            }
+            return $users;
         } else {
             return [];
         }

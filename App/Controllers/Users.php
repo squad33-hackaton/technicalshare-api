@@ -22,25 +22,17 @@ class Users extends Controller {
         $newUser = $this->getRequestBody();
 
         $userModel = $this->model("User");
-        $userModel->name = $newUser->name;
-        $userModel->email = $newUser->email;
-        $userModel->position = $newUser->position;
-        $userModel->level = $newUser->level;
-        $userModel->isMentor = $newUser->isMentor;
-        $userModel->techs = $newUser->techs;
-        $userModel->linkedin = $newUser->linkedin;
-        $userModel->teams = $newUser->teams;
-        $userModel->whatsapp = $newUser->whatsapp;
-
+        $userModel = User::fromJson($newUser);
         $userModel = $userModel->insert();
 
         if ($userModel) {
             http_response_code(201);
             echo json_encode($userModel);
+
         } else {
             http_response_code(500);
             echo json_encode(["error" => "insert error message"]);
         }
-        
+
     }
 }
