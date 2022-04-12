@@ -2,20 +2,21 @@
 
 use App\Core\Model;
 
-class Usuario {
+class User {
 
     public $id;
-    public $nome;
+    public $name;
     public $email;
-    public $senha;
-    public $habilidade;
+    public $position;
+    public $level;
+    public $isMentor;
+    public $techs;
     public $linkedin;
     public $teams;
     public $whatsapp;
-    public $isMentor;
 
     public function listAll() {
-        $sqlQuery = "SELECT * FROM usuario";
+        $sqlQuery = "SELECT * FROM user";
 
         $statement = Model::getConnection()->prepare($sqlQuery);
         $statement->execute();
@@ -30,27 +31,28 @@ class Usuario {
     }
 
     public function findById($id) {
-        $sqlQuery = "SELECT * FROM usuario WHERE id = ? LIMIT 0,1";
+        $sqlQuery = "SELECT * FROM user WHERE id = ? LIMIT 0,1";
 
         $statement = Model::getConnection()->prepare($sqlQuery);
         $statement->bindParam(1, $id);
 
         if ($statement->execute()) {
-            $usuario = $statement->fetch(PDO::FETCH_OBJ);
+            $user = $statement->fetch(PDO::FETCH_OBJ);
 
-            if (!$usuario) {
+            if (!$user) {
                 return false;
             }
 
-            $this->id = $usuario->id;
-            $this->nome = $usuario->nome;
-            $this->email = $usuario->email;
-            $this->senha = $usuario->senha;
-            $this->habilidade = $usuario->habilidade;
-            $this->linkedin = $usuario->linkedin;
-            $this->teams = $usuario->teams;
-            $this->whatsapp = $usuario->whatsapp;
-            $this->isMentor = $usuario->isMentor;
+            $this->id = $user->id;
+            $this->name = $user->name;
+            $this->email = $user->email;
+            $this->position = $user->position;
+            $this->level = $user->level;
+            $this->isMentor = $user->isMentor;
+            $this->techs = $user->techs;
+            $this->linkedin = $user->linkedin;
+            $this->teams = $user->teams;
+            $this->whatsapp = $user->whatsapp;
 
             return $this;
         
@@ -60,28 +62,30 @@ class Usuario {
     }
 
     public function insert() {
-        $sqlQuery = "INSERT INTO usuario (nome, email, senha, habilidade, linkedin, teams, whatsapp, is_mentor) 
-                     VALUES (:nome, :email, :senha, :habilidade, :linkedin, :teams, :whatsapp, :is_mentor)";
+        $sqlQuery = "INSERT INTO user (name, email, position, level, isMentor, techs, linkedin, teams, whatsapp) 
+                     VALUES (:name, :email, :position, :level, :isMentor, :techs, :linkedin, :teams, :whatsapp)";
         
         $statement = Model::getConnection()->prepare($sqlQuery);
 
-        $this->nome=htmlspecialchars(strip_tags($this->nome));
+        $this->name=htmlspecialchars(strip_tags($this->name));
         $this->email=htmlspecialchars(strip_tags($this->email));
-        $this->senha=htmlspecialchars(strip_tags($this->senha));
-        $this->habilidade=htmlspecialchars(strip_tags($this->habilidade));
+        $this->position=htmlspecialchars(strip_tags($this->position));
+        $this->level=htmlspecialchars(strip_tags($this->level));
+        $this->isMentor=htmlspecialchars(strip_tags($this->isMentor));
+        $this->techs=htmlspecialchars(strip_tags($this->techs));
         $this->linkedin=htmlspecialchars(strip_tags($this->linkedin));
         $this->teams=htmlspecialchars(strip_tags($this->teams));
         $this->whatsapp=htmlspecialchars(strip_tags($this->whatsapp));
-        $this->isMentor=htmlspecialchars(strip_tags($this->isMentor));
-
-        $statement->bindParam(":nome", $this->nome);
+        
+        $statement->bindParam(":name", $this->name);
         $statement->bindParam(":email", $this->email);
-        $statement->bindParam(":senha", $this->senha);
-        $statement->bindParam(":habilidade", $this->habilidade);
+        $statement->bindParam(":position", $this->position);
+        $statement->bindParam(":level", $this->level);
+        $statement->bindParam(":isMentor", $this->isMentor);
+        $statement->bindParam(":techs", $this->techs);
         $statement->bindParam(":linkedin", $this->linkedin);
         $statement->bindParam(":teams", $this->teams);
         $statement->bindParam(":whatsapp", $this->whatsapp);
-        $statement->bindParam(":is_mentor", $this->isMentor);
 
         if ($statement->execute()) {
             $this->id = Model::getConnection()->lastInsertId();
