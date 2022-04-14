@@ -35,8 +35,12 @@ class Router {
         switch ($this->httpMethod) {
             case "GET":
                 if (isset($url["path"][1])) {
-                    $this->controllerMethod = "find";
+                    $this->controllerMethod = "show";
                     $this->params = [$url["path"][1]];
+
+                } elseif (isset($url["query"])) {
+                    $this->controllerMethod = "filter";
+                    $this->params = [$url["query"]];
 
                 } else {
                     $this->controllerMethod = "index";
@@ -73,6 +77,7 @@ class Router {
 
         $urlArray = parse_url($url);
         $urlArray["path"] = ltrim($urlArray["path"], '/');
+        $urlArray["path"] = rtrim($urlArray["path"], '/');
         $urlArray["path"] = explode("/", $urlArray["path"]);
 
         return $urlArray;

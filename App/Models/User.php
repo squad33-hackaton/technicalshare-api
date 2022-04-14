@@ -69,7 +69,43 @@ class User implements JsonSerializable {
         }
     }
 
-    public function findById($id) {
+    public function findBy($field, $value) {
+
+        if (!$this->columnExists($field)) {
+            return false;
+        }
+
+        $sqlQuery = "SELECT * FROM user WHERE ${field} = \"${value}\"";
+
+        $statement = Model::getConnection()->prepare($sqlQuery);
+        $statement->execute();
+
+        if ($statement->rowCount() > 0) {
+            $users = array();
+            while ($user = $statement->fetch(PDO::FETCH_OBJ)) {
+                array_push($users, User::toJson($user));
+            }
+            return $users;
+        } else {
+            return [];
+
+        }
+    }
+
+    public function columnExists($column) {
+        $sqlQuery = "SHOW COLUMNS FROM `technicalsharedb`.`user` WHERE Field = \"${column}\"";
+        
+        $statement = Model::getConnection()->prepare($sqlQuery);
+        $statement->execute();
+
+        if ($statement->rowCount() > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getById($id) {
         $sqlQuery = "SELECT * FROM user WHERE id = ? LIMIT 0,1";
 
         $statement = Model::getConnection()->prepare($sqlQuery);

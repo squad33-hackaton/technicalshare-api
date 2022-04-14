@@ -11,9 +11,9 @@ class Users extends Controller {
         echo json_encode($users, JSON_UNESCAPED_UNICODE);
     }
 
-    public function find($id) {
+    public function show($id) {
         $userModel = $this->model("User");
-        $user = $userModel->findById($id);
+        $user = $userModel->getById($id);
         
         echo json_encode($user, JSON_UNESCAPED_UNICODE);
     }
@@ -33,6 +33,30 @@ class Users extends Controller {
             http_response_code(500);
             echo json_encode(["error" => "insert error message"]);
         }
+
+    }
+
+    public function filter($query) {
+        $userModel = $this->model("User");
+
+        $queryArray = explode("=", $query);
+        $field = $queryArray[0];
+        $value = $queryArray[1];
+        
+        switch ($field) {
+            case "email":
+            case "id":
+                $users = $userModel->findBy($field, $value);
+                break;
+
+            default: 
+                http_response_code(500);
+                echo json_encode(["error" => "invalid field"]);
+                exit;
+                break;
+        }
+
+        echo json_encode($users, JSON_UNESCAPED_UNICODE);
 
     }
 }
