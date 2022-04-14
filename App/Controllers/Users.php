@@ -15,7 +15,15 @@ class Users extends Controller {
         $userModel = $this->model("User");
         $user = $userModel->getById($id);
         
-        echo json_encode($user, JSON_UNESCAPED_UNICODE);
+        if (!$user || !is_numeric($id)) {
+            http_response_code(404);
+            echo json_encode(["error" => "user not found"]);            
+
+        } else {
+            http_response_code(200);
+            echo json_encode($user, JSON_UNESCAPED_UNICODE);
+
+        }
     }
 
     public function create() {
@@ -25,12 +33,14 @@ class Users extends Controller {
         $userModel = User::fromJson($newUser);
 
         $isEmailAvailable = !$userModel->findBy("email", $userModel->email);
+        $isUserValid = User::isValid($userModel);
 
         if (!$isEmailAvailable) {
             http_response_code(400);
             echo json_encode(["error" => "email already in use"]);
             
-        } else {
+        } elseif ($isUserValid) {
+
             $userModel = $userModel->insert();
 
             if ($userModel) {
@@ -39,9 +49,12 @@ class Users extends Controller {
 
             } else {
                 http_response_code(500);
-                echo json_encode(["error" => "insert error message"]);
+                echo json_encode(["error" => "internal server error"]);
             }
 
+        } else {
+            http_response_code(400);
+                echo json_encode(["error" => "invalid JSON"]);
         }
 
     }
@@ -57,16 +70,19 @@ class Users extends Controller {
             case "email":
             case "id":
                 $users = $userModel->findBy($field, $value);
+
+                if (!$users && isset($value)) {
+                    http_response_code(204);
+    
+                } else {
+                    echo json_encode($users, JSON_UNESCAPED_UNICODE);
+                }
                 break;
 
             default: 
-                http_response_code(500);
-                echo json_encode(["error" => "invalid field"]);
+                $this->index();
                 exit;
                 break;
         }
-
-        echo json_encode($users, JSON_UNESCAPED_UNICODE);
-
     }
 }

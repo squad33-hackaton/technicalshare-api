@@ -15,43 +15,6 @@ class User implements JsonSerializable {
     public $teams;
     public $whatsapp;
 
-    public function jsonSerialize() {
-        return User::toJson($this);
-    }
-
-    public static function toJson($obj) {
-        return [
-            'id' => $obj->id,
-            'name' => $obj->name,
-            'email' => $obj->email,
-            'position' => $obj->position,
-            'level' => $obj->level,
-            'isMentor' => $obj->isMentor,
-            'techs' => $obj->techs,
-            'links' => [
-                "linkedin" => $obj->linkedin,
-                "teams" => $obj->teams,
-                "whatsapp" => $obj->whatsapp
-            ]
-        ];
-    }
-
-    public static function fromJson($obj) {
-        $user = new self();
-        
-        $user->name = $obj->name;
-        $user->email = $obj->email;
-        $user->position = $obj->position;
-        $user->level = $obj->level;
-        $user->isMentor = $obj->isMentor;
-        $user->techs = $obj->techs;
-        $user->linkedin = $obj->links->linkedin;
-        $user->teams = $obj->links->teams;
-        $user->whatsapp = $obj->links->whatsapp;
-
-        return $user;
-    }
-
     public function listAll() {
         $sqlQuery = "SELECT * FROM user";
 
@@ -106,6 +69,7 @@ class User implements JsonSerializable {
     }
 
     public function getById($id) {
+
         $sqlQuery = "SELECT * FROM user WHERE id = ? LIMIT 0,1";
 
         $statement = Model::getConnection()->prepare($sqlQuery);
@@ -119,6 +83,7 @@ class User implements JsonSerializable {
             }
 
             $this->id = $user->id;
+
             $this->name = $user->name;
             $this->email = $user->email;
             $this->position = $user->position;
@@ -171,5 +136,57 @@ class User implements JsonSerializable {
             return null;
         }
 
+    }
+
+    public function jsonSerialize() {
+        return User::toJson($this);
+    }
+
+    public static function toJson($obj) {
+        return [
+            'id' => $obj->id,
+            'name' => $obj->name,
+            'email' => $obj->email,
+            'position' => $obj->position,
+            'level' => $obj->level,
+            'isMentor' => $obj->isMentor,
+            'techs' => $obj->techs,
+            'links' => [
+                "linkedin" => $obj->linkedin,
+                "teams" => $obj->teams,
+                "whatsapp" => $obj->whatsapp
+            ]
+        ];
+    }
+
+    public static function fromJson($obj) {
+        $user = new self();
+        
+        $user->name = $obj->name;
+        $user->email = $obj->email;
+        $user->position = $obj->position;
+        $user->level = $obj->level;
+        $user->isMentor = $obj->isMentor;
+        $user->techs = $obj->techs;
+        $user->linkedin = $obj->links->linkedin;
+        $user->teams = $obj->links->teams;
+        $user->whatsapp = $obj->links->whatsapp;
+
+        return $user;
+    }
+
+    public static function isValid($user) {
+        {
+            if (isset($user->name) &&
+                isset($user->email) &&
+                isset($user->position) &&
+                isset($user->level) &&
+                isset($user->isMentor) &&
+                isset($user->techs)) {
+    
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -18,12 +18,12 @@ class Router {
             $this->controller = $url["path"][0];
 
         } elseif (empty($url["path"][0])) {
-            echo "TechnicalShare API";
+            echo json_encode("TechnicalShare API");
             exit;
 
         } else {
             http_response_code(404);
-            echo json_encode(["error" => "not found"]);
+            echo json_encode(["error" => "resource not found"]);
             exit;
         }
 
