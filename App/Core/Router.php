@@ -14,11 +14,10 @@ class Router {
         
         $url = $this->parseURL();
 
-        if (file_exists("../App/Controllers/" . ucfirst($url[1]) . ".php")) {
-            $this->controller = $url[1];
-            unset($url[1]);
+        if (file_exists("../App/Controllers/" . ucfirst($url["path"][0]) . ".php")) {
+            $this->controller = $url["path"][0];
 
-        } elseif (empty($url[1])) {
+        } elseif (empty($url["path"][0])) {
             echo "TechnicalShare API";
             exit;
 
@@ -35,9 +34,9 @@ class Router {
 
         switch ($this->httpMethod) {
             case "GET":
-                if (isset($url[2])) {
+                if (isset($url["path"][1])) {
                     $this->controllerMethod = "find";
-                    $this->params = [$url[2]];
+                    $this->params = [$url["path"][1]];
 
                 } else {
                     $this->controllerMethod = "index";
@@ -66,7 +65,17 @@ class Router {
     }
 
     private function parseURL(){
-        return explode("/", $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]);
+        $url = sprintf('%s://%s%s',
+                        isset($_SERVER['HTTPS']) ? 'https' : 'http',
+                        $_SERVER['HTTP_HOST'],
+                        $_SERVER['REQUEST_URI']
+        );
+
+        $urlArray = parse_url($url);
+        $urlArray["path"] = ltrim($urlArray["path"], '/');
+        $urlArray["path"] = explode("/", $urlArray["path"]);
+
+        return $urlArray;
     }
 
 }
