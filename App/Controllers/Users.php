@@ -23,15 +23,25 @@ class Users extends Controller {
 
         $userModel = $this->model("User");
         $userModel = User::fromJson($newUser);
-        $userModel = $userModel->insert();
 
-        if ($userModel) {
-            http_response_code(201);
-            echo json_encode($userModel);
+        $isEmailAvailable = !$userModel->findBy("email", $userModel->email);
 
+        if (!$isEmailAvailable) {
+            http_response_code(400);
+            echo json_encode(["error" => "email already in use"]);
+            
         } else {
-            http_response_code(500);
-            echo json_encode(["error" => "insert error message"]);
+            $userModel = $userModel->insert();
+
+            if ($userModel) {
+                http_response_code(201);
+                echo json_encode($userModel);
+
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "insert error message"]);
+            }
+
         }
 
     }
