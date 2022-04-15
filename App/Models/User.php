@@ -34,7 +34,7 @@ class User implements JsonSerializable {
 
     public function findBy($field, $value) {
 
-        if (!$this->columnExists($field)) {
+        if (!$this->isFieldValid($field)) {
             return false;
         }
 
@@ -55,8 +55,8 @@ class User implements JsonSerializable {
         }
     }
 
-    public function columnExists($column) {
-        $sqlQuery = "SHOW COLUMNS FROM `technicalsharedb`.`user` WHERE Field = \"${column}\"";
+    public function isFieldValid($field) {
+        $sqlQuery = "SHOW COLUMNS FROM `technicalsharedb`.`user` WHERE Field = \"${field}\"";
         
         $statement = Model::getConnection()->prepare($sqlQuery);
         $statement->execute();
@@ -149,7 +149,7 @@ class User implements JsonSerializable {
             'email' => $obj->email,
             'position' => $obj->position,
             'level' => $obj->level,
-            'isMentor' => $obj->isMentor,
+            'isMentor' => filter_var($obj->isMentor, FILTER_VALIDATE_BOOLEAN),
             'techs' => $obj->techs,
             'links' => [
                 "linkedin" => $obj->linkedin,
@@ -166,7 +166,7 @@ class User implements JsonSerializable {
         $user->email = $obj->email;
         $user->position = $obj->position;
         $user->level = $obj->level;
-        $user->isMentor = $obj->isMentor;
+        $user->isMentor = filter_var($obj->isMentor, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
         $user->techs = $obj->techs;
         $user->linkedin = $obj->links->linkedin;
         $user->teams = $obj->links->teams;

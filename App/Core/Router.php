@@ -52,14 +52,8 @@ class Router {
                 $this->controllerMethod = "create";
                 break;
 
-            case "PUT":
-                break;
-
-            case "DELETE":
-                break;
-
             default: 
-                echo "unknown method";
+                echo "method not allowed";
                 exit;
                 break;
         }

@@ -64,11 +64,16 @@ class Users extends Controller {
 
         $queryArray = explode("=", $query);
         $field = $queryArray[0];
-        $value = $queryArray[1];
+        $value = urldecode($queryArray[1]);
         
         switch ($field) {
-            case "email":
+            case "isMentor":
+                $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
             case "id":
+            case "name":
+            case "email":
+            case "position":
+            case "level":
                 $users = $userModel->findBy($field, $value);
 
                 if (!$users && isset($value)) {
