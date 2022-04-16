@@ -1,0 +1,83 @@
+[33mcommit 14611d18cbc091f94c72d351e0715f1778bb720d[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mrefactor[m[33m)[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Fri Apr 15 19:45:29 2022 -0300
+
+    Corrige arquivos de banco de dados para instalação via phpMyAdmin
+
+[33mcommit d09f35689af55ff6f7a1d339c10109b1b2496984[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Fri Apr 15 17:59:58 2022 -0300
+
+    Corrige filtro e tratamento do isMentor
+
+[33mcommit b7908574045a8886e4977a6834190a414b1718fa[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Thu Apr 14 17:13:59 2022 -0300
+
+    Corrige códigos HTTP, mensagens e comportamento de alguns endpoints
+
+[33mcommit a5b1434ab1fadec59e21393ea1c21d7e4ba31b35[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Thu Apr 14 14:52:46 2022 -0300
+
+    Implementa validação de email durante cadastro
+
+[33mcommit a6b30a8adf1c0414db747cc0aefe2d7feb8444ed[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Thu Apr 14 14:31:07 2022 -0300
+
+    Implementa filtro de usuários
+
+[33mcommit bf562b0df62ff9e30f5483104fd82467117f546f[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Thu Apr 14 10:07:09 2022 -0300
+
+    Implementa a especificação CORS para integração com o front-end
+
+[33mcommit ee912577fe15bdc5bcf55472dcda295d7e318a81[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Wed Apr 13 22:07:09 2022 -0300
+
+    Altera o comportamento da manipulação de URL
+
+[33mcommit eb7052d087ff28d1111e0992235c4e1bc12c4fed[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Tue Apr 12 15:49:04 2022 -0300
+
+    Altera o layout do JSON (response/request)
+
+[33mcommit 08393c33917166ac5114c264bde60e2c6c74a5fd[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Tue Apr 12 09:49:57 2022 -0300
+
+    Refatora entidade User
+
+[33mcommit 42c3c68e6b028f5260187a695596aa157e238a0a[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Mon Apr 11 10:39:31 2022 -0300
+
+    Implementa método HTTP POST
+
+[33mcommit b52e5c18866ff6f75330372a66e4085ee8fdb959[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Sun Apr 10 15:28:28 2022 -0300
+
+    Implementa método HTTP GET
+
+[33mcommit 80e34697caf6d10499d94ca0ea28f35f6211a73a[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Sun Apr 10 01:38:19 2022 -0300
+
+    Implementa roteamento da API
+
+[33mcommit bbdc1d951c6aae60b077e61df538a0c320467a20[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Sat Apr 9 04:40:55 2022 -0300
+
+    Adiciona arquivos do Database
+
+[33mcommit e3bc468ba3dd59d36fcc945981f62a63f39dd78d[m
+Author: Celso Tavares <celsotavares@pm.me>
+Date:   Sat Apr 9 04:12:24 2022 -0300
+
+    Commit inicial - Adiciona a estrutura inicial da API
