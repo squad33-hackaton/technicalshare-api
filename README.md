@@ -7,13 +7,13 @@
 ## Menu
 
 - [Sobre](#-sobre)
-- [Documentação API](#blue_book)
-- [Pré-requisitos](#exclamation)
-- [Instalação](#floppy_disk)
-  - [Teste](#rotating)
-  - [Estrutura de pasta](#open_file_folder)
-- [Licença](#memo)
-- [Autor](#smiley_cat)
+- [Documentação API](#-documentação-api)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação](#-instalação-api-windows)
+- [Instalação Front-end](#-instalação-front-end)
+  - [Teste](#-teste)
+  - [Estrutura de pastas](#-estrutura-de-pastas)
+- [Equipe](#-equipe)
 
 ## 💻 Sobre
 
@@ -23,7 +23,7 @@ Este projeto foi desenvolvido pela Squad-33, uma das equipes participantes do Ha
 
 ## 📚 Documentação API
 
-Acesse a documentação em [Postman](https://documenter.getpostman.com/view/17833489/Uyr5myh9)
+Acesse a documentação em [Postman](https://documenter.getpostman.com/view/17833489/Uyr5myh9) para conhecer o funcionamento da API.
 
 ## 📝 Pré-requisitos
 
@@ -34,7 +34,7 @@ Acesse a documentação em [Postman](https://documenter.getpostman.com/view/1783
 
 ## 💾 Instalação API (Windows)
 
-* Baixar e instalar (usando configuração padrão) o [XAMPP](https://www.apachefriends.org/pt_br/download.html) e o [Git](https://git-scm.com/download/win):
+* Baixar e instalar (usando configuração padrão) o [XAMPP](https://www.apachefriends.org/pt_br/download.html) e o [Git](https://git-scm.com/download/win)
 
 * Após concluir a instalação, executar o `XAMPP` e iniciar os serviços `Apache` e `MySQL` (clicando nos botões `Start`)
 
